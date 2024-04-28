@@ -1,23 +1,17 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
-# This software may be used and distributed according to the terms of the GNU General Public License version 3.
-
-
 #!/bin/bash
+#Setup for Graham with 4 A100 GPU 2TB ram, max time is 3 hours
 #SBATCH --account=def-kemme
-#SBATCH --time=0-0:30
-#SBATCH --job-name=test_finetune_llama3
-#SBATCH --nodes=2
-#SBATCH --mem=191000M
+#SBATCH --time=0-0:10
+#SBATCH --job-name=llama3_ft_4gpu
+#SBATCH --nodes=1
+#SBATCH --mem=262144M
 #SBATCH --gpus-per-node=4
-#SBATCH --output=%N-%j.out
+#SBATCH --output=/home/lancelot/logs/%N-%j.out
 
 
 #Sending email when job status changes
 #SBATCH --mail-user=lancelot.normand@mail.mcgill.ca
 #SBATCH --mail-type=ALL
-
-
-
 
 #Getting node list and IP of master node (head node)
 nodes=( $( scontrol show hostnames $SLURM_JOB_NODELIST ) )
@@ -41,8 +35,4 @@ export CUDA_LAUNCH_BLOCKING=0
 module load cuda python/3.10 arrow/14.0.0
 
 export OMP_NUM_THREADS=4
-
-srun --export=ALL \
-  source ~/llama_env/bin/activate && \
-  torchrun --nproc_per_node 4 --rdzv_id $RANDOM --rdzv_backend c10d --rdzv_endpoint $head_node_ip:29500 ./finetuning.py  --enable_fsdp --use_peft --peft_method lora
-
+srun ./run_graham2.sh $head_node_ip
