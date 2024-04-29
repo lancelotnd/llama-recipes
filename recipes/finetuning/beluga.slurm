@@ -1,11 +1,10 @@
 #!/bin/bash
-#Setup for Graham with 4 A100 GPU 2TB ram, max time is 3 hours
 #SBATCH --account=def-kemme
-#SBATCH --time=02:59:00
-#SBATCH --job-name=graham2
-#SBATCH --nodes=1
-#SBATCH --mem=262144M
-#SBATCH --gres=gpu:a100:4
+#SBATCH --time=0-0:10
+#SBATCH --job-name=test_finetune_llama3
+#SBATCH --nodes=2
+#SBATCH --mem=191000M
+#SBATCH --gpus-per-node=4
 #SBATCH --output=/home/lancelot/logs/%N-%j.out
 
 
@@ -35,4 +34,4 @@ export CUDA_LAUNCH_BLOCKING=0
 module load cuda python/3.10 arrow/14.0.0
 
 export OMP_NUM_THREADS=4
-srun ./run_graham2.sh $head_node_ip
+srun ./run_beluga.sh $head_node_ip

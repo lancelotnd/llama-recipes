@@ -1,11 +1,12 @@
 #!/bin/bash
-#Setup for Graham with 4 A100 GPU 2TB ram, max time is 3 hours
+#Setup for Cedar with 4 V100 GPU 32GB of memory each
 #SBATCH --account=def-kemme
 #SBATCH --time=02:59:00
-#SBATCH --job-name=graham2
+#SBATCH --job-name=CEDAR_l3_ft
 #SBATCH --nodes=1
-#SBATCH --mem=262144M
-#SBATCH --gres=gpu:a100:4
+#SBATCH --mem=192000M
+#SBATCH --gpus-per-node=v100:4
+#SBATCH --exclusive
 #SBATCH --output=/home/lancelot/logs/%N-%j.out
 
 
@@ -35,4 +36,4 @@ export CUDA_LAUNCH_BLOCKING=0
 module load cuda python/3.10 arrow/14.0.0
 
 export OMP_NUM_THREADS=4
-srun ./run_graham2.sh $head_node_ip
+srun ./run_cedar.sh $head_node_ip

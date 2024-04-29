@@ -1,11 +1,11 @@
 #!/bin/bash
 #Setup for Graham with 8 A100 GPU 2TB ram, max time is 3 hours
 #SBATCH --account=def-kemme
-#SBATCH --time=0-0:10
-#SBATCH --job-name=test_finetune_llama3
+#SBATCH --time=0-1:00
+#SBATCH --job-name=graham1
 #SBATCH --nodes=1
 #SBATCH --mem=2048000M
-#SBATCH --gpus-per-node=8
+#SBATCH --gres=gpu:a100:8
 #SBATCH --output=/home/lancelot/logs/%N-%j.out
 
 

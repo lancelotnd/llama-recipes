@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=def-kemme
 #SBATCH --time=0-0:10
-#SBATCH --job-name=test_finetune_llama3
+#SBATCH --job-name=beluga
 #SBATCH --nodes=2
 #SBATCH --mem=191000M
 #SBATCH --gpus-per-node=4
